@@ -16,16 +16,15 @@ sleep_time = 5
 # %%
 client = Socrata(data_url, app_token)
 producer = Producer({"bootstrap.servers": bootstrap_servers})
-client.timeout = 30
-data_offset = 20
-api_limit = 20
+client.timeout = 60
+offset = 0
+api_limit = 100
 
 
 # %%
-def send_data_to_kafka():
+def send_data_to_kafka(api_offset):
     try:
-        offset = api_limit + api_limit
-        results = client.get(data_set, limit=api_limit, offset=offset)
+        results = client.get(data_set, limit=api_limit, offset=api_offset)
         df = pd.DataFrame.from_records(results)
 
         for _, row in df.iterrows():
@@ -42,5 +41,6 @@ def send_data_to_kafka():
 if __name__ == "__main__":
     print("Started streaming.")
     while True:
-        send_data_to_kafka()
-        time.sleep(sleep_time)
+        send_data_to_kafka(offset)
+        time.sleep(5)
+        offset = offset + api_limit
