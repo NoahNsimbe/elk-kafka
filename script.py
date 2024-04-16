@@ -29,7 +29,7 @@ def send_data_to_kafka():
         df = pd.DataFrame.from_records(results)
 
         for _, row in df.iterrows():
-            producer.produce(topic, json.dumps(row.to_dict()).encode("utf-8"))
+            producer.produce(topic, row.to_json())
 
         producer.flush()
 
