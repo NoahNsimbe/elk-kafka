@@ -12,5 +12,9 @@ cd kafka
 bin/kafka-topics.sh --create --topic service-requests-events --bootstrap-server localhost:9092
 bin/kafka-topics.sh --create --topic cleaned-service-requests-events --bootstrap-server localhost:9092
 
-## 
+## To consume data
 # bin/kafka-console-consumer.sh --topic cleaned-service-requests-events --from-beginning --bootstrap-server localhost:9092
+
+## Other useful commands
+# bin/kafka-topics.sh --list --bootstrap-server 34.67.100.196:9092
+# bin/kafka-topics.sh --delete --topic cleaned-service-requests-events --bootstrap-server localhost:9092
